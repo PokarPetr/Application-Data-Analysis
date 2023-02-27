@@ -18,13 +18,13 @@ from get_plot import PlotObject
 
 query_feed = Query.QUERY_FEED
 data = GetClickhouse(query_feed).df                     # DataFrame with all interested metrics.
-data['date'] = pd.to_datetime(data['date']).dt.date     # Transform values of 'data' column into the data format.
+data['date'] = pd.to_datetime(data['date']).dt.date     # Transform values of 'data' column into the date format.
 metrics_list = ['DAU', 'likes', 'views', 'events', 'posts']
 data = [data.astype({metric: int}).dtypes for metric in metrics_list]   # Change data types of some metrics to 'int'.
 
 
-mess = FeedReport(data).report          # Create a message to send to telegram
-plot = PlotObject(data).plot_object     # Create a plot object to send to telegram
+mess = FeedReport(data).report          # Create a message to send it to the telegram chat
+plot = PlotObject(data).plot_object     # Create a plot object to send it to the telegram chat
 
 chat_id = 1259270015
 bot = telegram.Bot(token=os.environ.get('REPORT_BOT_TOKEN'))
